@@ -15,23 +15,31 @@ function init() {
     elInfo.textContent = ''
 
     openTextFiles({ accept: '.gpx' }).then((results) => {
+      const tracks: Array<ReturnType<typeof readGPX>> = []
+
       for (const result of results) {
-        if (typeof result.content !== 'string') continue
+        if (result.content === null) continue
+
         const track = readGPX(result.content)
+        tracks.push(track)
+      }
 
-        // get all observations
-        const observations = document.querySelectorAll('#batchcol .observationform .column.span-24.observation')
+      // get all observations
+      const observations = document.querySelectorAll('#batchcol .observationform .column.span-24.observation')
 
-        let count = 0
-        for (const elObservation of observations) {
-          const observation = readObservation(elObservation as HTMLElement)
-          const updated = observationSetPositionFromTrack(observation, track)
+      let updatedCount = 0
+      for (const elObservation of observations) {
+        const observation = readObservation(elObservation as HTMLElement)
 
-          if (updated) count++
+        let updated = false
+        for (const track of tracks) {
+          updated = updated || observationSetPositionFromTrack(observation, track)
         }
 
-        elInfo.textContent = `Updated ${count} observation${count === 1 ? '' : 's'}`
+        if (updated) updatedCount++
       }
+
+      elInfo.textContent = `Updated ${updatedCount} observation${updatedCount === 1 ? '' : 's'}`
     })
   }
 }
