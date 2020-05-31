@@ -14,22 +14,25 @@ function init() {
   elButton.onclick = () => {
     elInfo.textContent = ''
 
-    openTextFile((file, content) => {
-      const track = readGPX(content)
+    openTextFiles({ accept: '.gpx' }).then((results) => {
+      for (const result of results) {
+        if (typeof result.content !== 'string') continue
+        const track = readGPX(result.content)
 
-      // get all observations
-      const observations = document.querySelectorAll('#batchcol .observationform .column.span-24.observation')
+        // get all observations
+        const observations = document.querySelectorAll('#batchcol .observationform .column.span-24.observation')
 
-      let count = 0
-      for (const elObservation of observations) {
-        const observation = readObservation(elObservation as HTMLElement)
-        const updated = observationSetPositionFromTrack(observation, track)
+        let count = 0
+        for (const elObservation of observations) {
+          const observation = readObservation(elObservation as HTMLElement)
+          const updated = observationSetPositionFromTrack(observation, track)
 
-        if (updated) count++
+          if (updated) count++
+        }
+
+        elInfo.textContent = `Updated ${count} observation${count === 1 ? '' : 's'}`
       }
-
-      elInfo.textContent = `Updated ${count} observation${count === 1 ? '' : 's'}`
-    }, 'gpx')
+    })
   }
 }
 
