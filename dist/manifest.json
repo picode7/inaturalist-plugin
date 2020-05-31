@@ -1,6 +1,6 @@
 {
   "name": "Tools for iNaturalist",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Apply a GPX file in batch edit mode to update the locations of observations according to their timestamp.",
   "manifest_version": 2,
   "homepage_url": "https://github.com/picode7/inaturalist-plugin#readme",
