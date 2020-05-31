@@ -4,7 +4,7 @@ function init() {
 
   const elButton = document.createElement('input')
   elButton.type = 'button'
-  elButton.value = 'Apply GPX file'
+  elButton.value = 'Apply GPX files'
   elButton.classList.add('default', 'button')
   elContainer.appendChild(elButton)
 
