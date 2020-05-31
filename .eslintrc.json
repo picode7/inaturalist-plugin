@@ -1,0 +1,55 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "prettier",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "no-empty": "warn",
+    "no-var": "error",
+    "no-undef": "off",
+    "no-inner-declarations": "off",
+    "no-constant-condition": ["error", { "checkLoops": false }],
+    "prefer-const": "warn",
+    "no-floating-decimal": "warn",
+    "comma-dangle": ["warn", "always-multiline"],
+    "no-template-curly-in-string": "warn",
+    "no-alert": "warn",
+    "no-console": "warn",
+    "no-eq-null": "error",
+
+    "@typescript-eslint/no-unused-vars": "off",
+    "no-empty-function": "off",
+    "@typescript-eslint/no-empty-function": ["warn"],
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/no-namespace": "off",
+    "@typescript-eslint/member-delimiter-style": "off",
+    "@typescript-eslint/array-type": ["warn", { "default": "array-simple" }],
+    "@typescript-eslint/ban-types": "warn",
+    "@typescript-eslint/consistent-type-definitions": "warn",
+    "@typescript-eslint/no-inferrable-types": "warn",
+    "@typescript-eslint/naming-convention": [
+      "warn",
+      { "selector": "default", "format": ["camelCase"] },
+      { "selector": "variable", "format": ["camelCase", "UPPER_CASE"] },
+      {
+        "selector": "parameter",
+        "format": ["camelCase"],
+        "leadingUnderscore": "allow"
+      },
+      {
+        "selector": "memberLike",
+        "modifiers": ["private"],
+        "format": ["camelCase"],
+        "leadingUnderscore": "require"
+      },
+      { "selector": "typeLike", "format": ["PascalCase"] },
+      { "selector": "enumMember", "format": ["PascalCase"] }
+    ]
+  }
+}

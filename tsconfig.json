@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "system",
+    "removeComments": false,
+    "sourceMap": true,
+
+    "strict": true,
+
+    "forceConsistentCasingInFileNames": true,
+
+    "outFile": "dist/app.js"
+  }
+}
