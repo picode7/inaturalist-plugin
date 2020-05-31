@@ -14,7 +14,7 @@ function init() {
   elButton.onclick = () => {
     elInfo.textContent = ''
 
-    openTextFiles({ accept: '.gpx' }).then((results) => {
+    openTextFiles({ accept: '.gpx', multiple: true }).then((results) => {
       const tracks: Array<ReturnType<typeof readGPX>> = []
 
       for (const result of results) {
