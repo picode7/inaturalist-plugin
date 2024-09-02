@@ -1,6 +1,6 @@
 {
   "name": "inaturalist-plugin",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "This is a plugin for iNaturalist.org",
   "main": "app.js",
   "dependencies": {},
