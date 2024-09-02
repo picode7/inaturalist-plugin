@@ -9,19 +9,22 @@ function init() {
   elContainer.appendChild(elButton)
 
   const elInfo = document.createElement('span')
+  elInfo.style.lineHeight = '30px'
   elContainer.appendChild(elInfo)
 
   elButton.onclick = () => {
     elInfo.textContent = ''
 
     openTextFiles({ accept: '.gpx', multiple: true }).then((results) => {
-      const tracks: Array<ReturnType<typeof readGPX>> = []
+      const tracks: Track[] = []
+      const errors: GPXError[] = []
 
       for (const result of results) {
         if (result.content === null) continue
 
-        const track = readGPX(result.content)
+        const { track, errors: gpxErrors } = readGPX(result.content)
         tracks.push(track)
+        errors.push(...gpxErrors)
       }
 
       // get all observations
@@ -39,7 +42,29 @@ function init() {
         if (updated) updatedCount++
       }
 
-      elInfo.textContent = `Updated ${updatedCount} observation${updatedCount === 1 ? '' : 's'}`
+      // Show results (updated count, errors, warnings)
+      if (errors.find((error) => error.type === 'error')) {
+        // Show error
+        elInfo.style.color = '#cd0a0a'
+        elInfo.textContent = `Error: ${errors.find((error) => error.type === 'error')?.message}`
+      } else {
+        // Show updated count
+        elInfo.style.color = 'default'
+        elInfo.textContent = `Updated ${updatedCount} observation${updatedCount === 1 ? '' : 's'}.`
+
+        // Show warnings
+        const hasWarnings = errors.find((error) => error.type === 'warning') !== undefined
+        if (hasWarnings) {
+          let warningsString = ' Warnings:'
+          for (const error of errors.filter((error) => error.type === 'warning')) {
+            warningsString += ` (${error.count}x) ${error.message}.`
+          }
+          const elWarning = document.createElement('span')
+          elWarning.style.color = '#f16f3a'
+          elWarning.textContent = warningsString
+          elInfo.appendChild(elWarning)
+        }
+      }
     })
   }
 }
@@ -58,10 +83,7 @@ function readObservation(observation: HTMLElement) {
   }
 }
 
-function observationSetPositionFromTrack(
-  observation: ReturnType<typeof readObservation>,
-  track: ReturnType<typeof readGPX>
-) {
+function observationSetPositionFromTrack(observation: ReturnType<typeof readObservation>, track: Track) {
   // Firefox does not parse '2020-05-30 7:01:02 PM GMT+02:00' because of am/pm, but supports it with '/' instead of '-' in the date string
   const dateTimeString = observation.observedOnString.value.replace(/-/g, '/')
   const date = new Date(dateTimeString)
