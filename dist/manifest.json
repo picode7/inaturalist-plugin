@@ -17,5 +17,10 @@
         "app.js"
       ]
     }
-  ]
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{164fe103-ad4c-40fe-82f3-ff72524cf579}"
+    }
+  }
 }
