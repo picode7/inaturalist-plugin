@@ -1,6 +1,6 @@
 {
   "name": "inaturalist-plugin",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "This is a plugin for iNaturalist.org",
   "main": "app.js",
   "dependencies": {},
@@ -12,7 +12,8 @@
     "typescript": "^3.8.3"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "dev": "tsc -w"
   },
   "repository": {
     "type": "git",
